@@ -5,7 +5,7 @@ d = { 'settings': { 'branch': 'main',
                 'doc_host': 'https://siraj-samsudeen.github.io',
                 'git_url': 'https://github.com/siraj-samsudeen/fasthtml-tutorials',
                 'lib_path': 'fasthtml_tutorials'},
-  'syms': { 'fasthtml_tutorials.core': { 'fasthtml_tutorials.core.start_server': ('core.html#start_server', 'fasthtml_tutorials/core.py'),
-                                         'fasthtml_tutorials.core.stop_server': ('core.html#stop_server', 'fasthtml_tutorials/core.py')},
-            'fasthtml_tutorials.part1_test': { 'fasthtml_tutorials.part1_test.get': ( '01-intro-tutorial-by-jeremy/part1.html#get',
-                                                                                      'fasthtml_tutorials/part1_test.py')}}}
+  'syms': { 'fasthtml_tutorials.01-intro-tutorial-by-jeremy.part1': { 'fasthtml_tutorials.01-intro-tutorial-by-jeremy.part1.get': ( '01-intro-tutorial-by-jeremy/part1.html#get',
+                                                                                                                                    'fasthtml_tutorials/01-intro-tutorial-by-jeremy/part1.py')},
+            'fasthtml_tutorials.core': { 'fasthtml_tutorials.core.start_server': ('core.html#start_server', 'fasthtml_tutorials/core.py'),
+                                         'fasthtml_tutorials.core.stop_server': ('core.html#stop_server', 'fasthtml_tutorials/core.py')}}}
