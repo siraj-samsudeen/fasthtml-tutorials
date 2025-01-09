@@ -7,5 +7,7 @@ d = { 'settings': { 'branch': 'main',
                 'lib_path': 'fasthtml_tutorials'},
   'syms': { 'fasthtml_tutorials.01-intro-tutorial-by-jeremy.part1': { 'fasthtml_tutorials.01-intro-tutorial-by-jeremy.part1.get': ( '01-intro-tutorial-by-jeremy/part1.html#get',
                                                                                                                                     'fasthtml_tutorials/01-intro-tutorial-by-jeremy/part1.py')},
+            'fasthtml_tutorials.01-intro-tutorial-by-jeremy.part2': { 'fasthtml_tutorials.01-intro-tutorial-by-jeremy.part2.get': ( '01-intro-tutorial-by-jeremy/part2.html#get',
+                                                                                                                                    'fasthtml_tutorials/01-intro-tutorial-by-jeremy/part2.py')},
             'fasthtml_tutorials.core': { 'fasthtml_tutorials.core.start_server': ('core.html#start_server', 'fasthtml_tutorials/core.py'),
                                          'fasthtml_tutorials.core.stop_server': ('core.html#stop_server', 'fasthtml_tutorials/core.py')}}}
