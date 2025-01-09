@@ -1,0 +1,9 @@
+project:
+  output-dir: _docs
+
+website:
+  title: "fasthtml-tutorials"
+  site-url: "https://siraj-samsudeen.github.io/fasthtml-tutorials"
+  description: "FastHTML tutorials organised in a beginner-friendly way"
+  repo-branch: main
+  repo-url: "https://github.com/siraj-samsudeen/fasthtml-tutorials"
