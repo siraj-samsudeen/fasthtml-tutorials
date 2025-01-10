@@ -1,0 +1,96 @@
+[
+  {
+    "objectID": "01-intro-tutorial-by-jeremy/part1.html",
+    "href": "01-intro-tutorial-by-jeremy/part1.html",
+    "title": "Greeting",
+    "section": "",
+    "text": "from fasthtml.jupyter import JupyUvi, HTMX\nfrom fasthtml_tutorials.core import start_server, stop_server\n\n\nHello World App\n\nstart_server(app)\n\n\n\n\n\n\n@rt(\"/\")\ndef get():\n    return Div(P(\"Hello  World!\"))\n\n\n# Output Preview - link=True gives you a clickable link to open the browser\n# TODO - when doing runAll, this shows the last modified version of the route - why?\n\nHTMX(link=True)\n\nOpen in new tab\n\n\n \n\n\n\n# Enable live reloading in the browser\n# TODO - Live Reloading does NOT work in the browser or in HTMX iframe in the notebook -\n# why? Is this a Bug?\napp, rt = fast_app(live=True)\n# whenever we modify the app, we need to restart the JupyUvi server\nstart_server(app)\n\n\n\n\n\n\n# You can see the HTML representation right here\nDiv(P(\"Hello  World!\"))\n\n&lt;div&gt;\n  &lt;p&gt;Hello  World!&lt;/p&gt;\n&lt;/div&gt;\n\n\n\n# You can also see the HTML rendered piece by piece\nshow(Div(P(\"Hello  World!\")))\n\n\n  Hello  World!\n\n\n\n\n# TODO Not sure why this is NOT printed as HTML\nTitled(\"Greeting\", Div(P(\"Hello  World!\")))\n\n(title(('Greeting',),{}),\n main((h1(('Greeting',),{}), div((p(('Hello  World!',),{}),),{})),{'class': 'container'}))\n\n\n\n# hack to get the HTML representation\n# print is needed to convert the newline character returned by to_xml to an actual new line\nprint(to_xml(Titled(\"Greeting\", Div(P(\"Hello  World!\")))))\n\n&lt;title&gt;Greeting&lt;/title&gt;\n&lt;main class=\"container\"&gt;  &lt;h1&gt;Greeting&lt;/h1&gt;\n  &lt;div&gt;\n    &lt;p&gt;Hello  World!&lt;/p&gt;\n  &lt;/div&gt;\n&lt;/main&gt;\n\n\n\nshow(Titled(\"Greeting\", Div(P(\"Hello  World!\"))))\n\nGreeting\n  \n  \n    Hello  World!\n  \n\n\n\n\nsource\n\n\nget\n\n get ()\n\n\nHTMX(link=True)\n\nOpen in new tab\n\n\n \n\n\n\nstop_server()\n\nWe need to include a serve when the notebook is exported. But calling serve here in this notebook does NOT do anything.\n\nimport nbdev\n\nnbdev.nbdev_export()",
+    "crumbs": [
+      "01-intro-tutorial-by-jeremy",
+      "Hello World App"
+    ]
+  },
+  {
+    "objectID": "01-intro-tutorial-by-jeremy/part2.html",
+    "href": "01-intro-tutorial-by-jeremy/part2.html",
+    "title": "Greeting",
+    "section": "",
+    "text": "from fasthtml.jupyter import JupyUvi, HTMX\nfrom fasthtml_tutorials.core import start_server, stop_server\n\n\nNavigate to another route\n\nstart_server(app)\n\n\n\n\n\n\nP(A(\"Link\", href=\"/change\"))\n\n&lt;p&gt;\n&lt;a href=\"/change\"&gt;Link&lt;/a&gt;&lt;/p&gt;\n\n\n\nshow(P(A(\"Link\", href=\"/change\")))\n\n\nLink\n\n\n\nshow(Titled(\"Greeting\", Div(P(\"Hello  World!\")), P(A(\"Link\", href=\"/change\"))))\n\nGreeting\n  \n  \n    Hello  World!\n  \n  \nLink  \n\n\n\n\nsource\n\n\nget\n\n get ()\n\n\nSeems like a bug:\nwhen trying to redefine the same route with a different convention the content of the route is not updating as you can see on the app.routes the “/change” route is added twice and it is picking up the first route instead of latest route.\nis it supposed to have duplicate route with same method? or is it a bug?.\n\nsource\n\n\n\nget\n\n get ()\n\n\napp.routes\n\n[WebSocketRoute(path='/live-reload', name='live_reload_ws'),\n Route(path='/{fname:path}.{ext:static}', name='static_route_exts_get', methods=['GET', 'HEAD', 'POST']),\n Route(path='/', name='get', methods=['GET', 'HEAD']),\n Route(path='/change', name='get', methods=['GET', 'HEAD'])]\n\n\n\n# this also works now - you don't need to use ONLY the HTTP verbs\n@rt(\"/change\")\ndef change():\n    return Titled(\n        \"Change\",\n        Div(P(\"Change is good! - Without specifying the HTTP verb as 'get()'\")),\n        P(A(\"Back\", href=\"/\")),\n    )\n\n\napp.routes\n\n[WebSocketRoute(path='/live-reload', name='live_reload_ws'),\n Route(path='/{fname:path}.{ext:static}', name='static_route_exts_get', methods=['GET', 'HEAD', 'POST']),\n Route(path='/', name='get', methods=['GET', 'HEAD']),\n Route(path='/change', name='get', methods=['GET', 'HEAD']),\n Route(path='/change', name='change', methods=['GET', 'HEAD', 'POST'])]\n\n\n\n# If the route is the same as the function name, you can skip specifying the route as a string\n@rt\ndef change():\n    return Titled(\n        \"Change\",\n        Div(P(\"Change is good! - skip specifying the route as '/change'\")),\n        P(A(\"Back\", href=\"/\")),\n    )\n\n\n# Now you can link to the python function rather than using a string route - easy to navigate in your Editor\n@rt(\"/\")\ndef get():\n    return Titled(\"Greeting\", Div(P(\"Hello  World!\")), P(A(\"Link\", href=change)))\n\n\nHTMX(link=True)\n\nOpen in new tab\n\n\n \n\n\n\nstop_server()",
+    "crumbs": [
+      "01-intro-tutorial-by-jeremy",
+      "Navigate to another route"
+    ]
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "fasthtml-tutorials",
+    "section": "",
+    "text": "This file will become your README and also the index of your documentation.",
+    "crumbs": [
+      "fasthtml-tutorials"
+    ]
+  },
+  {
+    "objectID": "index.html#developer-guide",
+    "href": "index.html#developer-guide",
+    "title": "fasthtml-tutorials",
+    "section": "Developer Guide",
+    "text": "Developer Guide\nIf you are new to using nbdev here are some useful pointers to get you started.\n\nInstall fasthtml_tutorials in Development mode\n# make sure fasthtml_tutorials package is installed in development mode\n$ pip install -e .\n\n# make changes under nbs/ directory\n# ...\n\n# compile to have changes apply to fasthtml_tutorials\n$ nbdev_prepare",
+    "crumbs": [
+      "fasthtml-tutorials"
+    ]
+  },
+  {
+    "objectID": "index.html#usage",
+    "href": "index.html#usage",
+    "title": "fasthtml-tutorials",
+    "section": "Usage",
+    "text": "Usage\n\nInstallation\nInstall latest from the GitHub repository:\n$ pip install git+https://github.com/siraj-samsudeen/fasthtml-tutorials.git\nor from conda\n$ conda install -c siraj-samsudeen fasthtml_tutorials\nor from pypi\n$ pip install fasthtml_tutorials\n\n\nDocumentation\nDocumentation can be found hosted on this GitHub repository’s pages. Additionally you can find package manager specific guidelines on conda and pypi respectively.",
+    "crumbs": [
+      "fasthtml-tutorials"
+    ]
+  },
+  {
+    "objectID": "index.html#how-to-use",
+    "href": "index.html#how-to-use",
+    "title": "fasthtml-tutorials",
+    "section": "How to use",
+    "text": "How to use\nFill me in please! Don’t forget code examples:\n\n1+1\n\n2",
+    "crumbs": [
+      "fasthtml-tutorials"
+    ]
+  },
+  {
+    "objectID": "core.html",
+    "href": "core.html",
+    "title": "core",
+    "section": "",
+    "text": "Utils\nIn Jupyter, we want to restart the kernel and Run All to run all the cells. But we need to remember to stop the server before doing Run All, otherwise Port will NOT be free and the server will not be able to start. Hence, we wrote an utility function to check whether the server is in the global namespace and then stop it.\nStopping the server takes a bit of time - so, we need to wait for the port to be free. We tried to use fasthtml.jupyter.wait_port_free() but this also did not work. Hence, we are doing a hack of just sleeping for 0.1 second, which works for now.\n\nsource\n\n\nstop_server\n\n stop_server ()\n\n\nsource\n\n\nstart_server\n\n start_server (app)\n\nIn Jupyter, we need to run the show(picocondlink) in a seperate cell to add styling to the pico components.\nIn order for the pico components to display correctly we need to add “pico” as a class to the element and there is a in-build function that does this called set_pico_cls() but for some reason it is not working, I’ve checked this function on the vscode and jupyterlab.\nHence, we created our own function that wraps the element in a div with the class “pico”.\n\nsource\n\n\nshow_with_pico\n\n show_with_pico (*args)",
+    "crumbs": [
+      "core"
+    ]
+  },
+  {
+    "objectID": "01-intro-tutorial-by-jeremy/part4.html",
+    "href": "01-intro-tutorial-by-jeremy/part4.html",
+    "title": "Todos",
+    "section": "",
+    "text": "from fasthtml.jupyter import JupyUvi, HTMX\nfrom fasthtml_tutorials.core import start_server, stop_server, show_with_pico\n\n\nBasic Todo Application\n\n# This is to render the pico component with styling in the output cells\n# if your using VS code with dark theme then change it to light colored theme to properly see the outputs\nshow(picocondlink)\n\n\n\n\n\n\n# To properly render the pico component, we need to add the \"pico\" class to every tag that is displayed in the output, and this is what this function does\nset_pico_cls()\n\n\n\n\n\napp, rt = fast_app(live=True)\nstart_server(app)\n\n\n\n\n\n\n# In the tutorial jeremy changes the database file to `data/todos.db` in the end, but for best practices we are including it from the start.\napp, rt, todos, Todo = fast_app(\n    \"data/todos.db\", live=True, id=int, title=str, done=bool, pk=\"id\"\n)\nstart_server(app)\n\n\n\n\n\n\n@rt(\"/\")\ndef get():\n    items = todos()\n    return Titled(\n        \"Todos\",\n        Div(*items),\n    )\n\n\n@rt(\"/\")\ndef get():\n    todos.insert(Todo(title=\"First todo\", done=False))\n    items = todos()\n    return Titled(\n        \"Todos\",\n        Div(*items),\n    )\n\n\n# To add a new todo, we need to refresh the page\nHTMX(link=True)\n\nOpen in new tab\n\n\n \n\n\n\nitems = todos()\nshow(\n    Titled(\n        \"Todos\",\n        Div(*items),\n    )\n)\n\nTodos\n  \n  \n\n\n\n\nitems = [Li(o) for o in todos()]\nshow(Ul(*items))\n\n\n\n\n\n@rt(\"/\")\ndef get():\n    todos.insert(Todo(title=\"Second todo\", done=False))\n    items = [Li(o) for o in todos()]\n    return Titled(\n        \"Todos\",\n        Ul(*items),\n    )\n\n\nHTMX(link=True)\n\nOpen in new tab\n\n\n \n\n\n\ndef render(todo):\n    return Li(todo.title)\n\n\napp, rt, todos, Todo = fast_app(\n    \"data/todos.db\",\n    live=True,\n    render=render,\n    id=int,\n    title=str,\n    done=bool,\n    pk=\"id\",\n)\nstart_server(app)\n\n\n\n\n\n\nshow(Ul(*todos()))\n\n\n\n\n\n@rt(\"/\")\ndef get():\n    return Titled(\n        \"Todos\",\n        Ul(*todos()),\n    )\n\n\ndef render(todo):\n    return Li(todo.title + (\"✅ \" if todo.done else \"\"))\n\n\napp, rt, todos, Todo = fast_app(\n    \"data/todos.db\",\n    live=True,\n    render=render,\n    id=int,\n    title=str,\n    done=bool,\n    pk=\"id\",\n)\nstart_server(app)\n\n\n\n\n\nUpdating the todos\n\ndef render(todo):\n    tid = f\"todo-{todo.id}\"\n    toggle = A(\"Toggle\", hx_get=f\"/toggle/{todo.id}\", target_id=tid)\n    return Li(\n        toggle,\n        todo.title + (\"✅ \" if todo.done else \"\"),\n        id=tid,\n    )\n\n\napp, rt, todos, Todo = fast_app(\n    \"data/todos.db\",\n    live=True,\n    render=render,\n    id=int,\n    title=str,\n    done=bool,\n    pk=\"id\",\n)\nstart_server(app)\n\n\n\n\n\n\nUl(*todos())\n\n&lt;ul&gt;&lt;/ul&gt;\n\n\n\nshow(Ul(*todos()))\n\n\n\n\n\n@rt(\"/\")\ndef get():\n    return Titled(\n        \"Todos\",\n        Ul(*todos()),\n    )\n\n\n@rt(\"/toggle/{tid}\")\ndef get(tid: int):\n    todo = todos[tid]\n    todo.done = not todo.done\n    return todos.update(todo)\n\nDelete a todo\n\nsource\n\n\nrender\n\n render (todo)\n\n\nstart_server(app)\n\n\n\n\n\n\nUl(*todos())\n\n&lt;ul&gt;&lt;/ul&gt;\n\n\n\nshow(Ul(*todos()))\n\n\n\n\n\n@rt(\"/\")\ndef get():\n    return Titled(\n        \"Todos\",\n        Ul(*todos()),\n    )\n\n\n@rt(\"/toggle/{tid}\")\ndef get(tid: int):\n    todo = todos[tid]\n    todo.done = not todo.done\n    return todos.update(todo)\n\n\n@rt(\"/{tid}\")\ndef delete(tid: int):\n    todos.delete(tid)\n\nCreate Todo\n\n# TODO: The output is not displayed as expected, why?\n# seems like set_pico_cls() function is not working.\n\nshow(Group(Input(placeholder=\"Add a new todo\", name=\"title\"), Button(\"Add\")))\n\n  \nAdd\n\n\n\n# Thus we are using custom funtion to apply the styling\n# this function is nothing but a wrapper around the elements with the class 'pico'.\nshow_with_pico(Group(Input(placeholder=\"Add a new todo\", name=\"title\"), Button(\"Add\")))\n\n\n    \nAdd\n\n\n\nfrm = Form(\n    Group(Input(placeholder=\"Add a new todo\", name=\"title\"), Button(\"Add\")),\n    hx_post=\"/\",\n    target_id=\"todo-list\",\n    hx_swap=\"beforeend\",\n)\n\nshow_with_pico(\n    Card(\n        Ul(*todos()),\n        header=frm,\n    )\n)\n\n\n  \n    \n          \nAdd    \n    \n  \n\n\n\n\n@rt(\"/\")\ndef get():\n    frm = Form(\n        Group(Input(placeholder=\"Add a new todo\", name=\"title\"), Button(\"Add\")),\n        hx_post=\"/\",\n        target_id=\"todo-list\",\n        hx_swap=\"beforeend\",\n    )\n    return Titled(\n        \"Todos\",\n        Card(\n            Ul(*todos(), id=\"todo-list\"),\n            header=frm,\n        ),\n    )\n\n\n@rt(\"/\")\ndef post(todo: Todo):\n    return todos.insert(todo)\n\nChanging two object at the same time\n\nsource\n\n\nmk_input\n\n mk_input ()\n\n\nsource\n\n\nget\n\n get ()\n\n\nsource\n\n\npost\n\n post (todo:types.Items)\n\n\nsource\n\n\nget\n\n get (tid:int)\n\n\nsource\n\n\ndelete\n\n delete (tid:int)\n\n\nHTMX(link=True)\n\nOpen in new tab\n\n\n \n\n\n\nstop_server()\n\n\nimport nbdev\n\nnbdev.nbdev_export()",
+    "crumbs": [
+      "01-intro-tutorial-by-jeremy",
+      "Basic Todo Application"
+    ]
+  },
+  {
+    "objectID": "01-intro-tutorial-by-jeremy/part3.html",
+    "href": "01-intro-tutorial-by-jeremy/part3.html",
+    "title": "Greeting",
+    "section": "",
+    "text": "from fasthtml.jupyter import JupyUvi, HTMX\nfrom fasthtml_tutorials.core import start_server, stop_server\n\n\nCreating Unordered list of numbers\n\nstart_server(app)\n\n\n\n\n\n\nUl(*[Li(o) for o in range(10)])\n\n&lt;ul&gt;\n  &lt;li&gt;0&lt;/li&gt;\n  &lt;li&gt;1&lt;/li&gt;\n  &lt;li&gt;2&lt;/li&gt;\n  &lt;li&gt;3&lt;/li&gt;\n  &lt;li&gt;4&lt;/li&gt;\n  &lt;li&gt;5&lt;/li&gt;\n  &lt;li&gt;6&lt;/li&gt;\n  &lt;li&gt;7&lt;/li&gt;\n  &lt;li&gt;8&lt;/li&gt;\n  &lt;li&gt;9&lt;/li&gt;\n&lt;/ul&gt;\n\n\n\nshow(Ul(*[Li(o) for o in range(10)]))\n\n\n  0\n  1\n  2\n  3\n  4\n  5\n  6\n  7\n  8\n  9\n\n\n\n\nnums = Ul(*[Li(o) for o in range(10)])\nshow(Titled(\"Greeting\", nums, P(A(\"Link\", href=\"/change\"))))\n\nGreeting\n  \n  \n    0\n    1\n    2\n    3\n    4\n    5\n    6\n    7\n    8\n    9\n  \n  \nLink  \n\n\n\n\n@rt(\"/\")\ndef get():\n    nums = Ul(*[Li(o) for o in range(10)])\n    return Titled(\"Greeting\", nums, P(A(\"Link\", href=\"/change\")))\n\n\n@rt(\"/change\")\ndef get():\n    return Titled(\"Change\", Div(P(\"Change is good!\")), P(A(\"Back\", href=\"/\")))\n\n\nHTMX(link=True)\n\nOpen in new tab\n\n\n \n\n\n\nsource\n\n\nNumList\n\n NumList (i)\n\n\nNumList(5)\n\n&lt;ul&gt;\n  &lt;li&gt;0&lt;/li&gt;\n  &lt;li&gt;1&lt;/li&gt;\n  &lt;li&gt;2&lt;/li&gt;\n  &lt;li&gt;3&lt;/li&gt;\n  &lt;li&gt;4&lt;/li&gt;\n&lt;/ul&gt;\n\n\n\n@rt(\"/\")\ndef get():\n    nums = NumList(5)\n    return Titled(\"Greeting\", nums, P(A(\"Link\", href=\"/change\")))\n\n\n\nCreating SPA(Single Page Application) behavior using HTMX\n\nnums = NumList(5)\nDiv(nums, id=\"stuff\", hx_get=\"/change\")\n\n&lt;div hx-get=\"/change\" id=\"stuff\"&gt;\n  &lt;ul&gt;\n    &lt;li&gt;0&lt;/li&gt;\n    &lt;li&gt;1&lt;/li&gt;\n    &lt;li&gt;2&lt;/li&gt;\n    &lt;li&gt;3&lt;/li&gt;\n    &lt;li&gt;4&lt;/li&gt;\n  &lt;/ul&gt;\n&lt;/div&gt;\n\n\n\nsource\n\n\nget\n\n get ()\n\n\nsource\n\n\nget\n\n get ()\n\n\nHTMX(link=True)\n\nOpen in new tab\n\n\n \n\n\n\nstop_server()",
+    "crumbs": [
+      "01-intro-tutorial-by-jeremy",
+      "Creating Unordered list of numbers"
+    ]
+  }
+]
