@@ -13,5 +13,7 @@ d = { 'settings': { 'branch': 'main',
                                                                                                                                         'fasthtml_tutorials/01-intro-tutorial-by-jeremy/part3.py'),
                                                                       'fasthtml_tutorials.01-intro-tutorial-by-jeremy.part3.get': ( '01-intro-tutorial-by-jeremy/part3.html#get',
                                                                                                                                     'fasthtml_tutorials/01-intro-tutorial-by-jeremy/part3.py')},
-            'fasthtml_tutorials.core': { 'fasthtml_tutorials.core.start_server': ('core.html#start_server', 'fasthtml_tutorials/core.py'),
+            'fasthtml_tutorials.core': { 'fasthtml_tutorials.core.show_with_pico': ( 'core.html#show_with_pico',
+                                                                                     'fasthtml_tutorials/core.py'),
+                                         'fasthtml_tutorials.core.start_server': ('core.html#start_server', 'fasthtml_tutorials/core.py'),
                                          'fasthtml_tutorials.core.stop_server': ('core.html#stop_server', 'fasthtml_tutorials/core.py')}}}
